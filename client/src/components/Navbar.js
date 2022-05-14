@@ -1,8 +1,17 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-  const { authState } = useContext(AuthContext);
+  const { authState, setAuthState } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({ username: "", id: 0, status: false });
+    console.log("logged out");
+    navigate("/login");
+  };
 
   return (
     <div>
@@ -55,9 +64,9 @@ function Navbar() {
               <div className="is-authed">
                 <ul className="navbar-nav ms-auto">
                   <li className="nav-item">
-                    <a className="nav-link" href="/about">
+                    <button className="nav-link" onClick={logout}>
                       Log out
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </div>

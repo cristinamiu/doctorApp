@@ -1,37 +1,18 @@
-// Checks if the requests come from an authenticated user
 const { verify } = require("jsonwebtoken");
-const { Users } = require("../models");
 
-const validateToken = async (req, res, next) => {
-  const token = req.cookies["access-token"];
-  let isAuthed = false;
+const validateToken = (req, res, next) => {
+  const accessToken = req.header("accessToken");
 
-  if (token) {
-    try {
-      const { id } = verify(token, "a");
-      console.log(id);
+  if (!accessToken) return res.json({ error: "User not logged in!" });
 
-      try {
-        const user = await Users.findByPk(id);
-
-        if (user) {
-          const userToReturn = { ...user.dataValues };
-          delete userToReturn.password;
-          req.user = userToReturn;
-          isAuthed = true;
-        }
-      } catch (error) {
-        isAuthed = false;
-      }
-    } catch (error) {
-      isAuthed = false;
+  try {
+    const validToken = verify(accessToken, "a");
+    req.user = validToken;
+    if (validToken) {
+      return next();
     }
-  }
-
-  if (isAuthed) {
-    return next();
-  } else {
-    return res.json({ error: "Unauthorized" });
+  } catch (err) {
+    return res.json({ error: accessToken.id });
   }
 };
 

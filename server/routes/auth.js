@@ -73,19 +73,22 @@ router.post("/login", async (req, res) => {
         "a"
       );
 
-      res.cookie("access-token", accessToken);
-
-      res.json({ accessToken: accessToken });
+      res.json({
+        accessToken: accessToken,
+        email: user.email,
+        role: user.role,
+        id: user.id,
+      });
     });
   }
 });
 
 router.get("/current", validateToken, (req, res) => {
-  if (!req.user) {
-    return res.json({ error: "Unauthorized" });
-  } else {
-    return res.json(req.user);
-  }
+  // if (!req.user) {
+  //   return res.json({ error: "Unauthorized" });
+  // } else {
+  return res.json(req.user);
+  // }
 });
 
 module.exports = router;
