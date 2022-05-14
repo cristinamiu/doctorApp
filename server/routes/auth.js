@@ -84,11 +84,13 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/current", validateToken, (req, res) => {
-  // if (!req.user) {
-  //   return res.json({ error: "Unauthorized" });
-  // } else {
   return res.json(req.user);
-  // }
+});
+
+router.get("/users", async (req, res) => {
+  const users = await Users.findAll({ where: { role: "doctor" } });
+
+  return res.json(users);
 });
 
 module.exports = router;

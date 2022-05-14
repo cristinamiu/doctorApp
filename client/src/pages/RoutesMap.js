@@ -4,6 +4,8 @@ import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";
+import AdminDashboard from "./admin/Dashboard";
+import AdminDoctors from "./admin/Doctors";
 
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
@@ -25,7 +27,18 @@ function RoutesMap() {
             path="/admin/dashboard"
             element={
               authState.role === "admin" ? (
-                <h1> Admin Dashboard</h1>
+                <AdminDashboard />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+          <Route
+            exact
+            path="/admin/doctors"
+            element={
+              authState.role === "admin" ? (
+                <AdminDoctors />
               ) : (
                 <h1>Unauthorized</h1>
               )
