@@ -3,9 +3,17 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(cookieParser());
+
+// Routers
+const authRouter = require("./routes/auth");
+app.use("/auth", authRouter);
 
 const db = require("./models");
 
