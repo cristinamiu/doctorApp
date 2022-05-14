@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const validateRegisterInput = require("../validation/authValidation");
 const { sign } = require("jsonwebtoken");
 const isEmpty = require("../validation/isEmpty");
+const { validateToken } = require("../middlewares/authMiddleware");
 
 router.post("/", async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -66,15 +67,25 @@ router.post("/login", async (req, res) => {
         return res.status(401).json({ error: "Wrong username or password" });
       }
 
+      req.user = { id: user.id, role: user.role };
       const accessToken = sign(
         { email: user.email, id: user.id, role: user.role },
-        "ImportantSecret"
+        "a"
       );
 
       res.cookie("access-token", accessToken);
 
-      res.json(accessToken);
+      res.json({ accessToken: accessToken });
     });
   }
 });
+
+router.get("/current", validateToken, (req, res) => {
+  if (!req.user) {
+    return res.json({ error: "Unauthorized" });
+  } else {
+    return res.json(req.user);
+  }
+});
+
 module.exports = router;
