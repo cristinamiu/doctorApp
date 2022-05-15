@@ -48,6 +48,7 @@ router.post("/new", async (req, res) => {
     fName.toLowerCase() + "." + lName.toLowerCase() + "@" + department + ".com";
   const password = department;
   const role = "doctor";
+  let id = 0;
 
   bcrypt.hash(password, 10).then((hash) => {
     Users.create({
@@ -56,9 +57,17 @@ router.post("/new", async (req, res) => {
       password: hash,
       role: role,
     }).then((result) => {
+      id = result.id;
       Doctors.create({ UserId: result.id, department: department });
+
+      return res.json({
+        id: id,
+        name: name,
+        email: email,
+        role: role,
+        department: department,
+      });
     });
-    res.json("Success");
   });
 });
 

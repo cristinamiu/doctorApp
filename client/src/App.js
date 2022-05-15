@@ -22,7 +22,7 @@ function App() {
       .then((response) => {
         if (response.data.error) {
           console.log(response.data.error);
-          setAuthState({ ...authState, status: false });
+          setAuthState({ username: "", id: 0, status: false });
         } else {
           if (response.data.id) {
             setAuthState({

@@ -1,16 +1,31 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import AdminSidebar from "./Sidebar";
+import AddDoctor from "./AddDoctor";
 import axios from "axios";
 
 function Doctors() {
   const [doctors, setDoctors] = useState([]);
+  const [fName, setfName] = useState("");
+  const [lName, setlName] = useState("");
+  const [department, setDepartment] = useState("");
 
   useEffect(() => {
     axios.get(`http://localhost:5000/auth/users`).then((response) => {
       setDoctors(response.data);
     });
   }, []);
+
+  const handleFName = (fName) => {
+    setfName(fName);
+  };
+
+  const handleLName = (lName) => {
+    setlName(lName);
+  };
+
+  const handleDepartment = (department) => {
+    setDepartment(department);
+  };
 
   const deleteDoctor = (doctorId) => {
     axios
@@ -24,6 +39,27 @@ function Doctors() {
       });
   };
 
+  const addDoctor = () => {
+    axios
+      .post("http://localhost:5000/doctors/new", {
+        fName: fName,
+        lName: lName,
+        department: department,
+      })
+      .then((response) => {
+        if (response.data.error) {
+          alert("Error");
+        } else {
+          axios.get(`http://localhost:5000/auth/users`).then((response) => {
+            setDoctors(response.data);
+          });
+        }
+      });
+    // .catch((err) => {
+    //   alert("Error: " + err.data.error);
+    // });
+  };
+
   return (
     <div>
       <div class="container-fluid">
@@ -32,7 +68,12 @@ function Doctors() {
           <div class="col-sm p-4 vh-100">
             <h1>Doctors</h1>
             <div className="d-flex flex-row-reverse">
-              <button type="button" class="btn btn-success  mt-4 mb-4">
+              <button
+                type="button"
+                class="btn btn-success mb-4"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
                 Add doctor
               </button>
             </div>
@@ -54,6 +95,7 @@ function Doctors() {
                       <img
                         src="/images/doctor.png"
                         className="rouded-circle justify-content-start"
+                        alt=""
                       />
                     </td>
                     <td>{doctor.id}</td>
@@ -96,10 +138,16 @@ function Doctors() {
                 ))}
               </tbody>
             </table>
-            {/* hdfj */}
           </div>
         </div>
       </div>
+
+      <AddDoctor
+        onChangeFName={handleFName}
+        onChangeLName={handleLName}
+        onChangeDepartment={handleDepartment}
+        onAddDoctorClick={addDoctor}
+      />
     </div>
   );
 }
