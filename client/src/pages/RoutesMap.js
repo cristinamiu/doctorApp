@@ -10,6 +10,8 @@ import DoctorPage from "./admin/DoctorPage";
 import Dashboard from "./doctor/Dashboard";
 import DoctorPatients from "./doctor/Patients";
 import DoctorAppointments from "./doctor/Appointments";
+import DoctorAppointmentPage from "./doctor/AppointmentPage";
+
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
   return (
@@ -92,6 +94,18 @@ function RoutesMap() {
             element={
               authState.role === "doctor" ? (
                 <DoctorAppointments />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/doctors/my-appointments/appointment/:id"
+            element={
+              authState.role === "doctor" ? (
+                <DoctorAppointmentPage />
               ) : (
                 <h1>Unauthorized</h1>
               )

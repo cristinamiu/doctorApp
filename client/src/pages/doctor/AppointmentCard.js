@@ -39,7 +39,9 @@ function AppointmentCard(props) {
                   class="btn btn-success"
                   type="button"
                   onClick={() =>
-                    navigate(`/appointment/${props.appointment.appointment_id}`)
+                    navigate(
+                      `/doctors/my-appointments/appointment/${props.appointment.id}`
+                    )
                   }
                 >
                   Show
