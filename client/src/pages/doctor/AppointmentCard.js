@@ -1,9 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import Status from "./Status";
 
 function AppointmentCard(props) {
-  const navigate = useNavigate();
-
   return (
     <div className="col-sm-3">
       <div className="m-2 card appointment-card">
@@ -19,7 +17,8 @@ function AppointmentCard(props) {
             <strong>Patient: </strong> {props.appointment.Patient.name}
           </p>
           <p>
-            <strong>Status: </strong> {props.appointment.status}
+            <strong>Status: </strong>{" "}
+            <Status status={props.appointment.status} />
           </p>
           <div class="container">
             <div class="row">

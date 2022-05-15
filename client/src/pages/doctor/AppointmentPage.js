@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DoctorSidebar from "./Sidebar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import Status from "./Status";
 
 function AppointmentPage() {
   const { state } = useLocation();
@@ -50,9 +51,10 @@ function AppointmentPage() {
                 </p>
                 <p className="card-text">
                   <strong>Status: </strong>
-                  <span class="badge rounded-pill bg-warning text-dark">
+                  {/* <span class="badge rounded-pill bg-warning text-dark">
                     {appointment.status}
-                  </span>
+                  </span> */}
+                  <Status status={appointment.status} />
                 </p>
               </div>
             </div>
