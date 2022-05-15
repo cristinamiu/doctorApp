@@ -42,6 +42,15 @@ router.get("/:doctorId/my-appointments", async (req, res) => {
   return res.json(myAppointments);
 });
 
+router.get("/my-appointments/appointment/:appId", async (req, res) => {
+  const myAppointments = await Appointments.findOne({
+    where: { id: req.params.appId },
+    include: { model: Patients },
+  });
+
+  return res.json(myAppointments);
+});
+
 router.delete("/:doctorId/:appId/delete-appointment", async (req, res) => {
   const appointment = await Appointments.findOne({
     where: { id: req.params.appId },
@@ -98,6 +107,20 @@ router.delete("/:doctorId", async (req, res) => {
   await doctor.destroy();
 
   return res.json("Success");
+});
+
+router.put("/:doctorId/:appId/approve", async (req, res) => {
+  try {
+    const updatedApp = await Appointments.update(
+      { status: "Approved", isApproved: true },
+      { where: { id: req.params.appId } }
+    );
+
+    return res.json("Success");
+  } catch (err) {
+    console.error("There's an error" + err.message);
+    return res.status(404).json({ error: "Doctor not found" });
+  }
 });
 
 router.post("/new", async (req, res) => {

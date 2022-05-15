@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DoctorSidebar from "./Sidebar";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
-function AppointmentPage(props) {
+function AppointmentPage() {
   const { state } = useLocation();
+  const [appointment, setAppointment] = useState(state.appointment);
   console.log(state);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:5000/doctors/my-appointments/appointment/${state.appointment.id}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        setAppointment(response.data);
+      });
+  }, []);
+
+  const handleApproval = (e) => {
+    e.preventDefault();
+    console.log("ok");
+    axios
+      .put(
+        `http://localhost:5000/doctors/${appointment.DoctorId}/${appointment.id}/approve`
+      )
+      .then((response) => {
+        setAppointment({ ...appointment, status: "Approved" });
+      });
+  };
   return (
     <div class="row">
       <DoctorSidebar />
@@ -13,20 +38,20 @@ function AppointmentPage(props) {
           {/* VIEW FOR PACIENT AND DOCTOR */}
           <div className="info-appointment">
             <div className="card">
-              <h5 className="card-header">{state.appointment.title}</h5>
+              <h5 className="card-header">{appointment.title}</h5>
               <div className="card-body">
                 <p className="card-text">
                   <strong>Patient Name: </strong>
-                  {state.appointment.Patient.name}
+                  {appointment.Patient.name}
                 </p>
                 <p className="card-text">
                   <strong>Date: </strong>
-                  {state.appointment.date}
+                  {appointment.date}
                 </p>
                 <p className="card-text">
                   <strong>Status: </strong>
                   <span class="badge rounded-pill bg-warning text-dark">
-                    {state.appointment.status}
+                    {appointment.status}
                   </span>
                 </p>
               </div>
@@ -45,7 +70,11 @@ function AppointmentPage(props) {
                 </button>
               </div>
 
-              <button type="button" className="btn btn-success btn-space">
+              <button
+                type="button"
+                className="btn btn-success btn-space"
+                onClick={handleApproval}
+              >
                 Approve
               </button>
             </div>
