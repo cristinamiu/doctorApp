@@ -70,7 +70,7 @@ router.post("/new", async (req, res) => {
       role: role,
     }).then((result) => {
       id = result.id;
-      Doctors.create({ UserId: result.id, department: department });
+      Doctors.create({ UserId: result.id, department: department, name: name });
 
       return res.json({
         id: id,

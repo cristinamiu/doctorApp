@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: "patient",
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 
   Patients.associate = (models) => {

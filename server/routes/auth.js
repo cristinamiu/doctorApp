@@ -44,9 +44,13 @@ router.post("/", async (req, res) => {
       if (result.role === "admin") {
         Admin.create({ id: result.id });
       } else if (result.role === "doctor") {
-        Doctors.create({ UserId: result.id, department: department });
+        Doctors.create({
+          UserId: result.id,
+          department: department,
+          name: name,
+        });
       } else if (result.role === "patient") {
-        Patients.create({ UserId: result.id });
+        Patients.create({ UserId: result.id, name: name });
       }
     });
 
