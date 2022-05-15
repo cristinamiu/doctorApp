@@ -34,14 +34,15 @@ function Appointments() {
       });
   }, [doctorId]);
   return (
-    <div className="container-fluid ">
-      <div class="row vh-100">
-        <DoctorSidebar />
-        {/* <div class="col-sm p-0"> */}
-        {appointments.map((app, key) => (
-          <AppointmentCard appointment={app} onDelete={handleDelete} />
-        ))}
-        {/* </div> */}
+    <div class="row">
+      <DoctorSidebar />
+      <div class="col">
+        <h1>ds</h1>
+        <div className="row p-2">
+          {appointments.map((app, key) => (
+            <AppointmentCard appointment={app} onDelete={handleDelete} />
+          ))}
+        </div>
       </div>
     </div>
   );

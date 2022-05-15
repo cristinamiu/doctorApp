@@ -5,7 +5,7 @@ function AppointmentCard(props) {
   const navigate = useNavigate();
 
   return (
-    <div className="col-md-3">
+    <div className="col-sm-3">
       <div className="m-2 card appointment-card">
         <img src="../images/doctor.png" alt="Appointment" />
         <div className="m-3 card-title">

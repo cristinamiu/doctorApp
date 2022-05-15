@@ -13,9 +13,9 @@ import DoctorAppointments from "./doctor/Appointments";
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
   return (
-    <div className="general-layout vh-100" style={{ overflow: "hidden" }}>
+    <div className="general-layout ">
       <BrowserRouter>
-        <div className="navigation">
+        <div className="row">
           <Navbar />
         </div>
 
