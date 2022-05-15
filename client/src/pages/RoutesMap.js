@@ -45,13 +45,49 @@ function RoutesMap() {
               )
             }
           />
-
           <Route
             exact
             path="/admin/doctors/:doctorId"
             element={
               authState.role === "admin" ? (
                 <DoctorPage />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+
+          {/* DOCTOR ROUTES */}
+          <Route
+            exact
+            path="/doctors/dashboard"
+            element={
+              authState.role === "doctor" ? (
+                <h1>hello dashboard</h1>
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/doctors/my-patients"
+            element={
+              authState.role === "doctor" ? (
+                <h1>hello my patients</h1>
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/doctors/my-appointments"
+            element={
+              authState.role === "doctor" ? (
+                <h1>hello my appointments</h1>
               ) : (
                 <h1>Unauthorized</h1>
               )

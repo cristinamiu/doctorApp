@@ -33,6 +33,8 @@ function Login() {
           navigate("/admin/dashboard");
         } else if (response.data.role === "patient") {
           navigate("/patients/dashboard");
+        } else if (response.data.role === "doctor") {
+          navigate("/doctors/dashboard");
         }
       })
       .catch((err) => {
