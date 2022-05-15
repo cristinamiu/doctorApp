@@ -7,13 +7,17 @@ import LoginPage from "./LoginPage";
 import AdminDashboard from "./admin/Dashboard";
 import AdminDoctors from "./admin/Doctors";
 import DoctorPage from "./admin/DoctorPage";
+import Dashboard from "./doctor/Dashboard";
+import DoctorPatients from "./doctor/Patients";
 
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
   return (
-    <div className="general-layout">
+    <div className="general-layout vh-100" style={{ overflow: "hidden" }}>
       <BrowserRouter>
-        <Navbar />
+        <div className="navigation">
+          <Navbar />
+        </div>
 
         <Routes>
           {/* Register route */}
@@ -63,7 +67,7 @@ function RoutesMap() {
             path="/doctors/dashboard"
             element={
               authState.role === "doctor" ? (
-                <h1>hello dashboard</h1>
+                <Dashboard />
               ) : (
                 <h1>Unauthorized</h1>
               )
@@ -75,7 +79,7 @@ function RoutesMap() {
             path="/doctors/my-patients"
             element={
               authState.role === "doctor" ? (
-                <h1>hello my patients</h1>
+                <DoctorPatients />
               ) : (
                 <h1>Unauthorized</h1>
               )
