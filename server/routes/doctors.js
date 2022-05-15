@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Users, Doctors } = require("../models");
+const { Users, Doctors, Patients, Appointments } = require("../models");
 const validateRegisterInput = require("../validation/doctorsValidation");
 const bcrypt = require("bcrypt");
 
@@ -14,6 +14,44 @@ router.get("/get-doc/:userId", async (req, res) => {
   }
 
   res.json(doctor);
+});
+
+router.get("/get-user/:patientId", async (req, res) => {
+  const UserId = await Patients.findOne({
+    where: { id: req.params.patientId },
+    attributes: ["UserId"],
+  });
+
+  if (!UserId) {
+    return res.status(404).json({ error: "User patient not found" });
+  }
+  const user = await Users.findByPk(UserId.UserId);
+  if (!user) {
+    return res.status(404).json({ error: "User patient not found" });
+  }
+
+  res.json(user);
+});
+
+router.get("/:doctorId/my-appointments", async (req, res) => {
+  const myAppointments = await Appointments.findAll({
+    where: { DoctorId: req.params.doctorId },
+  });
+
+  return res.json(myAppointments);
+});
+
+router.post("/new-appointment", async (req, res) => {
+  const { title, date, DoctorId, PatientId } = req.body;
+
+  const newAppointment = await Appointments.create({
+    title: title,
+    date: date,
+    DoctorId: DoctorId,
+    PatientId: PatientId,
+  });
+
+  return res.json(newAppointment);
 });
 
 router.get("/:doctorId", async (req, res) => {

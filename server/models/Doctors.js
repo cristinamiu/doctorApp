@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     Doctors.belongsToMany(models.Patients, {
       through: "Diagnostics",
     });
-    Doctors.belongsToMany(models.Patients, {
-      through: "Appointments",
+    Doctors.hasMany(models.Appointments, {
+      ondelete: "cascade",
     });
   };
 
