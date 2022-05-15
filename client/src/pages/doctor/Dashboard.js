@@ -1,4 +1,4 @@
-import React, { useSate, useContext } from "react";
+import React, { useContext } from "react";
 import DoctorSidebar from "./Sidebar";
 import { AuthContext } from "../../context/AuthContext";
 

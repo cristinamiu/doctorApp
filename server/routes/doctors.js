@@ -36,6 +36,7 @@ router.get("/get-user/:patientId", async (req, res) => {
 router.get("/:doctorId/my-appointments", async (req, res) => {
   const myAppointments = await Appointments.findAll({
     where: { DoctorId: req.params.doctorId },
+    include: { model: Patients },
   });
 
   return res.json(myAppointments);

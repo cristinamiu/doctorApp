@@ -15,3 +15,44 @@
   font-style: italic;
   color: red;
 }
+/* ergthyj */
+.appointment-card {
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: all linear 200ms;
+}
+.appointment-card:hover {
+  transform: scale(1.1);
+  transition: all linear 200ms;
+  z-index: 1;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.appointment-body {
+  text-align: left;
+}
+
+#logo img {
+  margin: auto 20px;
+}
+
+.sidebar {
+  display: flex;
+  min-height: 85vh;
+  flex-flow: column;
+}
+.selected {
+  color: blue;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
