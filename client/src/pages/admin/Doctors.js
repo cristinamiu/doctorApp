@@ -7,7 +7,7 @@ function Doctors() {
   const [doctors, setDoctors] = useState([]);
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
-  const [department, setDepartment] = useState("");
+  const [department, setDepartment] = useState("cardiology");
 
   useEffect(() => {
     axios.get(`http://localhost:5000/auth/users`).then((response) => {
@@ -40,6 +40,7 @@ function Doctors() {
   };
 
   const addDoctor = () => {
+    console.log(department);
     axios
       .post("http://localhost:5000/doctors/new", {
         fName: fName,
@@ -54,10 +55,10 @@ function Doctors() {
             setDoctors(response.data);
           });
         }
+      })
+      .catch((err) => {
+        alert("Error: " + err.data.error);
       });
-    // .catch((err) => {
-    //   alert("Error: " + err.data.error);
-    // });
   };
 
   return (

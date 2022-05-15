@@ -69,6 +69,7 @@ function AddDoctor(props) {
                 onChange={(event) =>
                   props.onChangeDepartment(event.target.value)
                 }
+                value={"cardiology"}
               >
                 {departments.map((department) => (
                   <option value={department}>{department}</option>
