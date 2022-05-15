@@ -6,6 +6,7 @@ const validateRegisterInput = require("../validation/authValidation");
 const { sign } = require("jsonwebtoken");
 const isEmpty = require("../validation/isEmpty");
 const { validateToken } = require("../middlewares/authMiddleware");
+var sequelize = require("sequelize");
 
 router.post("/", async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -27,7 +28,7 @@ router.post("/", async (req, res) => {
       .json({ error: "There is already a user with this email" });
   }
 
-  const { name, email, password } = req.body;
+  const { name, email, password, department } = req.body;
   let { role } = req.body;
 
   if (isEmpty(role)) {
@@ -44,7 +45,7 @@ router.post("/", async (req, res) => {
       if (result.role === "admin") {
         Admin.create({ id: result.id });
       } else if (result.role === "doctor") {
-        Doctors.create({ id: result.id });
+        Doctors.create({ UserId: result.id, department: department });
       } else if (result.role === "patient") {
         Patients.create({ id: result.id });
       }
@@ -88,7 +89,14 @@ router.get("/current", validateToken, (req, res) => {
 });
 
 router.get("/users", async (req, res) => {
-  const users = await Users.findAll({ where: { role: "doctor" } });
+  const users = await Users.findAll({
+    where: { role: "doctor" },
+    include: {
+      model: Doctors,
+      attributes: ["userId", "department"],
+      required: true,
+    },
+  });
 
   return res.json(users);
 });

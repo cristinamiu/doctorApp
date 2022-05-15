@@ -17,28 +17,38 @@ function Doctors() {
         <div class="row">
           <AdminSidebar />
           <div class="col-sm p-4 vh-100">
-            {doctors.map((doctor, key) => (
-              <div> {doctor.name}</div>
-            ))}
+            <h2>Doctors</h2>
             {/*  */}
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-              </tbody>
-            </table>
+            <ul class="list-group list-group-light">
+              {doctors.map((doctor, key) => (
+                <div>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                      <img
+                        src="/images/doctor.png"
+                        alt=""
+                        class="rounded-circle"
+                      />
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1" style={{ textAlign: "left" }}>
+                          {doctor.name}
+                        </p>
+                        <p class="text-muted mb-0">{doctor.email}</p>
+                      </div>
+                    </div>
+                    <p> {doctor.Doctors[0].department}</p>
+
+                    <a
+                      class="btn btn-primary btn-rounded btn-sm"
+                      href="/"
+                      role="button"
+                    >
+                      View
+                    </a>
+                  </li>
+                </div>
+              ))}
+            </ul>
             {/*  */}
           </div>
         </div>
