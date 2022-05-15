@@ -38,11 +38,13 @@ function AppointmentCard(props) {
                 <button
                   class="btn btn-success"
                   type="button"
-                  onClick={() =>
-                    navigate(
-                      `/doctors/my-appointments/appointment/${props.appointment.id}`
-                    )
-                  }
+                  // onClick={() =>
+                  // navigate(
+                  //   `/doctors/my-appointments/appointment/${props.appointment.id}`,
+                  //   { state: { appointment: props.appointment.title } }
+                  // )
+                  // }
+                  onClick={() => props.onShow(props.appointment)}
                 >
                   Show
                 </button>

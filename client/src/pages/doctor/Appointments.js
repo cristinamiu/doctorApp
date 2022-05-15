@@ -3,12 +3,20 @@ import DoctorSidebar from "./Sidebar";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import AppointmentCard from "./AppointmentCard";
+import { useNavigate } from "react-router-dom";
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
   const { authState } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const doctorId = authState.secondId;
+
+  const handleShow = (app) => {
+    console.log(app);
+    navigate(`/doctors/my-appointments/appointment/${app.id}`, {
+      state: { appointment: app },
+    });
+  };
 
   const handleDelete = (appId) => {
     console.log(appId);
@@ -40,7 +48,11 @@ function Appointments() {
         <h1>ds</h1>
         <div className="row p-2">
           {appointments.map((app, key) => (
-            <AppointmentCard appointment={app} onDelete={handleDelete} />
+            <AppointmentCard
+              appointment={app}
+              onDelete={handleDelete}
+              onShow={handleShow}
+            />
           ))}
         </div>
       </div>
