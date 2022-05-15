@@ -10,10 +10,17 @@ function Appointments() {
 
   const doctorId = authState.secondId;
 
-  const handleDelete = (id) => {
-    console.log(id);
+  const handleDelete = (appId) => {
+    console.log(appId);
+    axios
+      .delete(
+        `http://localhost:5000/doctors/${doctorId}/${appId}/delete-appointment`
+      )
+      .then((response) => {
+        console.log(response);
+      });
     const appointmentsToReturn = appointments.filter(
-      (appointment) => appointment.id !== id
+      (appointment) => appointment.id !== appId
     );
     setAppointments(appointmentsToReturn);
   };

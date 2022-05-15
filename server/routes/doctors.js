@@ -42,6 +42,20 @@ router.get("/:doctorId/my-appointments", async (req, res) => {
   return res.json(myAppointments);
 });
 
+router.delete("/:doctorId/:appId/delete-appointment", async (req, res) => {
+  const appointment = await Appointments.findOne({
+    where: { id: req.params.appId },
+  });
+
+  if (!appointment) {
+    return res.status(404).json({ error: "Appointment not found" });
+  }
+
+  appointment.destroy();
+
+  return res.json("Success");
+});
+
 router.post("/new-appointment", async (req, res) => {
   const { title, date, DoctorId, PatientId } = req.body;
 
