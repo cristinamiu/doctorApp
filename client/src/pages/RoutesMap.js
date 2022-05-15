@@ -6,6 +6,7 @@ import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";
 import AdminDashboard from "./admin/Dashboard";
 import AdminDoctors from "./admin/Doctors";
+import DoctorPage from "./admin/DoctorPage";
 
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
@@ -47,10 +48,10 @@ function RoutesMap() {
 
           <Route
             exact
-            path="/admin/doctors"
+            path="/admin/doctors/:doctorId"
             element={
               authState.role === "admin" ? (
-                <h1>Admin doctors</h1>
+                <DoctorPage />
               ) : (
                 <h1>Unauthorized</h1>
               )

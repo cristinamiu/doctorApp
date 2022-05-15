@@ -6,7 +6,6 @@ const validateRegisterInput = require("../validation/authValidation");
 const { sign } = require("jsonwebtoken");
 const isEmpty = require("../validation/isEmpty");
 const { validateToken } = require("../middlewares/authMiddleware");
-var sequelize = require("sequelize");
 
 router.post("/", async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);

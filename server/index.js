@@ -15,6 +15,9 @@ app.use(cookieParser());
 const authRouter = require("./routes/auth");
 app.use("/auth", authRouter);
 
+const docRouter = require("./routes/doctors");
+app.use("/doctors", docRouter);
+
 const db = require("./models");
 
 db.sequelize.sync().then(() => {

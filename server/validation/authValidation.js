@@ -2,6 +2,7 @@ const Validator = require("validator");
 const isEmpty = require("./isEmpty");
 
 const roles = ["admin", "patient", "doctor"];
+const departments = ["cardiology", "neurology"];
 
 const validateRegisterInput = (data) => {
   let errors = {};
@@ -37,6 +38,12 @@ const validateRegisterInput = (data) => {
   // Check role field
   if (!isEmpty(data.role) && !roles.includes(data.role)) {
     errors.role = "Role field is not valid";
+  }
+
+  // Check department field if necessary
+  // Check role field
+  if (!isEmpty(data.department) && !departments.includes(data.department)) {
+    errors.department = "Department field is not valid";
   }
 
   return {
