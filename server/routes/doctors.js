@@ -4,6 +4,18 @@ const { Users, Doctors } = require("../models");
 const validateRegisterInput = require("../validation/doctorsValidation");
 const bcrypt = require("bcrypt");
 
+router.get("/get-doc/:userId", async (req, res) => {
+  const doctor = await Doctors.findOne({
+    where: { UserId: req.params.userId },
+    attributes: ["id"],
+  });
+  if (!doctor) {
+    return res.status(404).json({ error: "Doctor not found" });
+  }
+
+  res.json(doctor);
+});
+
 router.get("/:doctorId", async (req, res) => {
   const doctor = await Users.findOne({ where: { id: req.params.doctorId } });
 

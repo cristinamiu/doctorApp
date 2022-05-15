@@ -24,13 +24,36 @@ function App() {
           console.log(response.data.error);
           setAuthState({ username: "", id: 0, status: false });
         } else {
+          // if (response.data.id) {
+          //   setAuthState({
+          //     email: response.data.email,
+          //     id: response.data.id,
+          //     role: response.data.role,
+          //     status: true,
+          //   });
           if (response.data.id) {
-            setAuthState({
-              email: response.data.email,
-              id: response.data.id,
-              role: response.data.role,
-              status: true,
-            });
+            if (response.data.role === "admin") {
+              setAuthState({
+                email: response.data.email,
+                id: response.data.id,
+                role: response.data.role,
+                status: true,
+              });
+            } else if (response.data.role === "doctor") {
+              axios
+                .get(
+                  `http://localhost:5000/doctors/get-doc/${response.data.id}`
+                )
+                .then((resp) => {
+                  setAuthState({
+                    email: response.data.email,
+                    id: response.data.id,
+                    role: response.data.role,
+                    status: true,
+                    secondId: resp.data.id,
+                  });
+                });
+            }
           }
         }
       });
