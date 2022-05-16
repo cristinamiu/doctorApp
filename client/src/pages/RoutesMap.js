@@ -15,7 +15,7 @@ import DoctorAppointmentPage from "./doctor/AppointmentPage";
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
   return (
-    <div className="general-layout ">
+    <div className="general-layout container-fluid d-flex flex-column p-0">
       <BrowserRouter>
         <div className="row">
           <Navbar />

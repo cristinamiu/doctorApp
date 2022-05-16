@@ -11,6 +11,11 @@
   margin: auto 20px;
 }
 
+#root {
+  padding: 0;
+  margin: 0;
+}
+
 .auth_error {
   font-style: italic;
   color: red;
@@ -55,4 +60,9 @@
   width: 100%;
   height: 15vw;
   object-fit: cover;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
 }

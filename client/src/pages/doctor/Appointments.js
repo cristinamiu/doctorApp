@@ -42,18 +42,20 @@ function Appointments() {
       });
   }, [doctorId]);
   return (
-    <div class="row">
-      <DoctorSidebar />
-      <div class="col">
-        <h1>ds</h1>
-        <div className="row p-2">
-          {appointments.map((app, key) => (
-            <AppointmentCard
-              appointment={app}
-              onDelete={handleDelete}
-              onShow={handleShow}
-            />
-          ))}
+    <div className="container-fluid d-flex flex-column p-0">
+      <div class="row">
+        <DoctorSidebar />
+        <div class="col">
+          <h1>ds</h1>
+          <div className="row p-2">
+            {appointments.map((app, key) => (
+              <AppointmentCard
+                appointment={app}
+                onDelete={handleDelete}
+                onShow={handleShow}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

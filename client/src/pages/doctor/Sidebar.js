@@ -2,7 +2,7 @@ import React from "react";
 
 const Sidebar = () => {
   return (
-    <div class="col-sm-auto bg-light d-flex flex-column">
+    <div class="col-sm-auto bg-light d-flex flex-column p-0">
       <div class="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
         <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center justify-content-between w-100 px-3 align-items-center">
           <li class="nav-item">
