@@ -46,15 +46,35 @@ function Appointments() {
       <div class="row">
         <DoctorSidebar />
         <div class="col">
-          <h1>ds</h1>
+          <h3 style={{ textAlign: "left", marginTop: "10px" }}>
+            Pending appointments:
+          </h3>
           <div className="row p-2">
-            {appointments.map((app, key) => (
-              <AppointmentCard
-                appointment={app}
-                onDelete={handleDelete}
-                onShow={handleShow}
-              />
-            ))}
+            {appointments.map(
+              (app, key) =>
+                app.status === "Pending" && (
+                  <AppointmentCard
+                    appointment={app}
+                    onDelete={handleDelete}
+                    onShow={handleShow}
+                  />
+                )
+            )}
+          </div>
+          <h3 style={{ textAlign: "left", marginTop: "10px" }}>
+            Upcoming appointments:
+          </h3>
+          <div className="row p-2">
+            {appointments.map(
+              (app, key) =>
+                app.status === "Approved" && (
+                  <AppointmentCard
+                    appointment={app}
+                    onDelete={handleDelete}
+                    onShow={handleShow}
+                  />
+                )
+            )}
           </div>
         </div>
       </div>
