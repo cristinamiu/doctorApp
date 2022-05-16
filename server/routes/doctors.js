@@ -62,17 +62,25 @@ router.post("/add-diagnostic", async (req, res) => {
 
   try {
     Diagnostics.create({
+      AppointmentId: appId,
       [field]: content,
     }).then((result) => {
-      Appointments.update(
-        { DiagnosticId: result.id },
-        { where: { id: appId } }
-      ).then((result) => {
-        return res.json(result);
-      });
+      return res.json(result);
     });
   } catch (error) {
     return res.status(404).json({ error: "Could not add diagnostic" + error });
+  }
+});
+
+router.get("/get-diagnostics/:patientId", async (req, res) => {
+  try {
+    const patientApp = await Appointments.findAll({
+      where: { PatientId: req.params.patientId },
+      include: { model: Diagnostics },
+    });
+    return res.json(patientApp);
+  } catch (error) {
+    return res.status(404).json({ error: "Could not get diagnostic" + error });
   }
 });
 

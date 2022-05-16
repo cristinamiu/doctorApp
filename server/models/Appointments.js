@@ -34,6 +34,12 @@ module.exports = (sequelize, DataTypes) => {
   Appointments.associate = (models) => {
     Appointments.belongsTo(models.Patients);
     Appointments.belongsTo(models.Doctors);
+    Appointments.hasMany(models.Diagnostics, {
+      ondelete: "cascade",
+    });
+    Appointments.hasMany(models.Prescriptions, {
+      ondelete: "cascade",
+    });
   };
 
   return Appointments;

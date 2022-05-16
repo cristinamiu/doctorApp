@@ -53,10 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   Diagnostics.associate = (models) => {
-    Diagnostics.belongsToMany(models.Prescriptions, {
-      through: "Appointments",
-      onDelete: "cascade",
-    });
+    Diagnostics.belongsTo(models.Appointments);
   };
   return Diagnostics;
 };
