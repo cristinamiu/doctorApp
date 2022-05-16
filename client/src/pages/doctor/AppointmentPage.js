@@ -9,7 +9,10 @@ import PrescriptionForm from "./PrescriptionForm";
 function AppointmentPage() {
   const { state } = useLocation();
   const [appointment, setAppointment] = useState(state.appointment);
-  const [newPrescription, setNewPrescription] = useState("");
+  const [newObs, setNewObs] = useState("");
+  const [newMed, setNewMed] = useState("");
+  const [newDose, setNewDose] = useState("");
+
   const [newDiagnostic, setNewDiagnostic] = useState("");
   const [diagnostic, setDiagnostic] = useState({});
   const [prescriptionObject, setPrescriptionObject] = useState({});
@@ -98,7 +101,9 @@ function AppointmentPage() {
       .post(
         `http://localhost:5000/doctors/add-prescription`,
         {
-          observation: "Eat healthy",
+          observation: newObs,
+          medication: newMed,
+          dose: newDose,
           appId: state.appointment.id,
           doctorId: state.appointment.DoctorId,
         },
@@ -116,8 +121,16 @@ function AppointmentPage() {
       });
   };
 
-  const handleChange = (e) => {
-    setNewPrescription(e.target.value);
+  const handleObs = (e) => {
+    setNewObs(e.target.value);
+  };
+
+  const handleMed = (e) => {
+    setNewMed(e.target.value);
+  };
+
+  const handleDose = (e) => {
+    setNewDose(e.target.value);
   };
 
   const handleChangeDiag = (diag) => {
@@ -256,15 +269,15 @@ function AppointmentPage() {
                   <div className="card-body" style={{ textAlign: "left" }}>
                     <p className="card-text">
                       <span style={{ fontWeight: "600" }}>Observations: </span>
-                      {prescriptionObject.observation}{" "}
+                      {prescriptionObject.observation}
                     </p>
                     <p className="card-text">
                       <span style={{ fontWeight: "600" }}>Medication: </span>
-                      {prescriptionObject.AppointmentId}{" "}
+                      {prescriptionObject.medication}
                     </p>
                     <p className="card-text">
                       <span style={{ fontWeight: "600" }}>Dose: </span>
-                      {prescriptionObject.AppointmentId}{" "}
+                      {prescriptionObject.dose}
                     </p>
                   </div>
                 </div>
@@ -273,7 +286,9 @@ function AppointmentPage() {
           </div>
         </>
         <PrescriptionForm
-          onChange={handleChange}
+          onChangeObs={handleObs}
+          onChangeMed={handleMed}
+          onChangeDose={handleDose}
           onAddPrescriptionClick={addPrescription}
         />
         <DiagnosticForm

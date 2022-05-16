@@ -24,11 +24,26 @@ function PrescriptionForm(props) {
               ></button>
             </div>
             <div className="modal-body">
+              <label>Observations</label>
               <input
                 type="text"
                 className="form-control"
                 placeholder="Add new prescription"
-                onChange={(event) => props.onChange(event)}
+                onChange={(event) => props.onChangeObs(event)}
+              />
+              <label>Medication</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Add new prescription"
+                onChange={(event) => props.onChangeMed(event)}
+              />
+              <label>Dose</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Add new prescription"
+                onChange={(event) => props.onChangeDose(event)}
               />
             </div>
             <div className="modal-footer">
