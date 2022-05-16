@@ -14,6 +14,8 @@ import DoctorAppointmentPage from "./doctor/AppointmentPage";
 import DPendingAppointment from "./doctor/PendingAppointments";
 import PatientDashboard from "./patient/Dashboard";
 import PatientAppointments from "./patient/Appointments";
+import PPendingAppointment from "./patient/PendingAppointments";
+import PatientAppointmentPage from "./patient/AppointmentPage";
 
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
@@ -170,10 +172,57 @@ function RoutesMap() {
             element={
               authState.role === "patient" ? (
                 <div>
-                  <PatientDashboard />
+                  <PatientAppointments />
                 </div>
               ) : (
                 <h1> Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/patients/my-appointments/pending"
+            element={
+              authState.role === "patient" ? (
+                <PPendingAppointment status={"Pending"} />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+          <Route
+            exact
+            path="/patients/my-appointments/approved"
+            element={
+              authState.role === "patient" ? (
+                <PPendingAppointment status={"Approved"} />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/patients/my-appointments/complete"
+            element={
+              authState.role === "patient" ? (
+                <PPendingAppointment status={"Complete"} />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/patients/my-appointments/appointment/:id"
+            element={
+              authState.role === "patient" ? (
+                <PatientAppointmentPage />
+              ) : (
+                <h1>Unauthorized</h1>
               )
             }
           />

@@ -18,6 +18,9 @@ app.use("/auth", authRouter);
 const docRouter = require("./routes/doctors");
 app.use("/doctors", docRouter);
 
+const patRouter = require("./routes/patient");
+app.use("/patients", patRouter);
+
 const db = require("./models");
 
 db.sequelize.sync().then(() => {

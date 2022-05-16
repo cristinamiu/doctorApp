@@ -1,13 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import PatientSidebar from "./Sidebar";
+import DoctorSidebar from "./Sidebar";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
-import AppointmentCard from "../doctor/AppointmentCard";
+import AppointmentCard from "./AppointmentCard";
 import { useNavigate } from "react-router-dom";
-import GeneralInfo from "../doctor/GeneralAppInfo";
-import Jumbotron from "../doctor/Jumbotron";
 
-function Appointments() {
+function PendingAppointments(props) {
+  // const status = props.status;
   const [appointments, setAppointments] = useState([]);
   const { authState } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -24,7 +23,7 @@ function Appointments() {
     console.log(appId);
     axios
       .delete(
-        `http://localhost:5000/patients/${patientId}/${appId}/delete-appointment`
+        `http://localhost:5000/doctors/${patientId}/${appId}/delete-appointment`
       )
       .then((response) => {
         console.log(response);
@@ -43,36 +42,37 @@ function Appointments() {
         console.log(response.data);
       });
   }, [patientId]);
-
   return (
     <div className="container-fluid d-flex flex-column p-0">
       <div class="row">
-        <PatientSidebar />
+        <DoctorSidebar />
         <div class="col">
-          <div>
-            <Jumbotron title="My Appointments" />
-            <div class="row">
-              <GeneralInfo
-                style="linear-gradient(45deg, #ffb64d, #ffcb80)"
-                status="Pending"
-                path="/patients/my-appointments/pending"
-              />
-              <GeneralInfo
-                style="linear-gradient(45deg, #2ed8b6, #59e0c5)"
-                status="Upcoming"
-                path="/patients/my-appointments/approved"
-              />
-              <GeneralInfo
-                style="linear-gradient(45deg, #4099ff, #73b4ff)"
-                status="Past"
-                path="/patients/my-appointments/complete"
-              />
+          <h3 style={{ textAlign: "left", marginTop: "10px" }}>
+            {props.status} appointments:
+          </h3>
+          {!appointments.find((app) => app.status === props.status) ? (
+            <p style={{ fontStyle: "italic", textAlign: "left" }}>
+              No {props.status} appointments
+            </p>
+          ) : (
+            <div className="row p-2">
+              {appointments.map(
+                (app, key) =>
+                  app.status === props.status && (
+                    <AppointmentCard
+                      appointment={app}
+                      onDelete={handleDelete}
+                      onShow={handleShow}
+                      status={props.status}
+                    />
+                  )
+              )}
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-export default Appointments;
+export default PendingAppointments;
