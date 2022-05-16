@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Prescriptions = sequelize.define("Prescriptions", {
     observation: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     medication: {
       type: DataTypes.STRING,

@@ -6,6 +6,7 @@ const {
   Patients,
   Appointments,
   Diagnostics,
+  Prescriptions,
 } = require("../models");
 const validateRegisterInput = require("../validation/doctorsValidation");
 const bcrypt = require("bcrypt");
@@ -57,25 +58,90 @@ router.get("/my-appointments/appointment/:appId", async (req, res) => {
   return res.json(myAppointments);
 });
 
-router.post("/add-diagnostic", async (req, res) => {
-  const { field, content, doctorId, appId } = req.body;
+router.get("/get-prescriptions/by-app/:appId", async (req, res) => {
+  const myPrescriptions = await Prescriptions.findOne({
+    where: { AppointmentId: req.params.appId },
+  });
+
+  return res.json(myPrescriptions);
+});
+
+router.get("/get-prescriptions/by-patient/:patientId", async (req, res) => {
+  try {
+    const patientApp = await Appointments.findAll({
+      where: { PatientId: req.params.patientId },
+      include: { model: Prescriptions },
+    });
+    return res.json(patientApp);
+  } catch (error) {
+    return res.status(404).json({ error: "Could not get diagnostic" + error });
+  }
+});
+
+router.post("/add-prescription", async (req, res) => {
+  const { observation, medication, dose, doctorId, appId } = req.body;
 
   try {
-    Diagnostics.create({
-      AppointmentId: appId,
-      [field]: content,
-    }).then((result) => {
-      return res.json(result);
+    Prescriptions.update(
+      {
+        AppointmentId: appId,
+        observation: observation,
+        medication: medication,
+        dose: dose,
+      },
+      { where: { AppointmentId: appId } }
+    ).then((result) => {
+      Prescriptions.findOne({ where: { AppointmentId: appId } }).then(
+        (resp) => {
+          return res.json(resp);
+        }
+      );
     });
   } catch (error) {
     return res.status(404).json({ error: "Could not add diagnostic" + error });
   }
 });
 
-router.get("/get-diagnostics/:patientId", async (req, res) => {
+router.post("/add-diagnostic", async (req, res) => {
+  const { content, doctorId, appId } = req.body;
+  const field = await Doctors.findOne({
+    where: { id: doctorId },
+    attributes: ["department"],
+  });
+
+  try {
+    Diagnostics.update(
+      {
+        AppointmentId: appId,
+        [field.department]: content,
+      },
+      { where: { AppointmentId: appId } }
+    ).then((result) => {
+      Diagnostics.findOne({ where: { AppointmentId: appId } }).then((resp) => {
+        return res.json(resp);
+      });
+    });
+  } catch (error) {
+    return res.status(404).json({ error: "Could not add diagnostic" + error });
+  }
+});
+
+router.get("/get-diagnostics/by-patient/:patientId", async (req, res) => {
   try {
     const patientApp = await Appointments.findAll({
       where: { PatientId: req.params.patientId },
+      include: { model: Diagnostics },
+    });
+    return res.json(patientApp);
+  } catch (error) {
+    return res.status(404).json({ error: "Could not get diagnostic" + error });
+  }
+});
+
+router.get("/get-diagnostics/by-app/:appId", async (req, res) => {
+  try {
+    const patientApp = await Appointments.findAll({
+      where: { id: req.params.appId },
       include: { model: Diagnostics },
     });
     return res.json(patientApp);
@@ -98,17 +164,20 @@ router.delete("/:doctorId/:appId/delete-appointment", async (req, res) => {
   return res.json("Success");
 });
 
-router.post("/new-appointment", async (req, res) => {
+router.post("/new-appointment", (req, res) => {
   const { title, date, DoctorId, PatientId } = req.body;
 
-  const newAppointment = await Appointments.create({
+  Appointments.create({
     title: title,
     date: date,
     DoctorId: DoctorId,
     PatientId: PatientId,
-  });
+  }).then((result) => {
+    Diagnostics.create({ AppointmentId: result.id });
+    Prescriptions.create({ AppointmentId: result.id });
 
-  return res.json(newAppointment);
+    return res.json(result);
+  });
 });
 
 router.get("/:doctorId", async (req, res) => {

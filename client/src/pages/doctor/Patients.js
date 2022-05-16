@@ -1,6 +1,6 @@
 import React from "react";
 import DoctorSidebar from "./Sidebar";
-import GeneralInfo from "./GeneralAppInfo";
+// import GeneralInfo from "./GeneralAppInfo";
 
 function Patients() {
   return (
@@ -9,9 +9,9 @@ function Patients() {
         <DoctorSidebar />
         <div class="col-sm p-0">
           <div class="container">
-            <div class="row">
+            {/* <div class="row">
               <GeneralInfo style="linear-gradient(45deg, #4099ff, #73b4ff)" />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

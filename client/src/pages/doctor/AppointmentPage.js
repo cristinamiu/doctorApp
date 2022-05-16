@@ -3,10 +3,17 @@ import DoctorSidebar from "./Sidebar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Status from "./Status";
+import DiagnosticForm from "./DiagnosticForm";
+import PrescriptionForm from "./PrescriptionForm";
 
 function AppointmentPage() {
   const { state } = useLocation();
   const [appointment, setAppointment] = useState(state.appointment);
+  const [newPrescription, setNewPrescription] = useState("");
+  const [newDiagnostic, setNewDiagnostic] = useState("");
+  const [diagnostic, setDiagnostic] = useState({});
+  const [prescriptionObject, setPrescriptionObject] = useState({});
+
   console.log(state);
 
   useEffect(() => {
@@ -17,6 +24,24 @@ function AppointmentPage() {
       .then((response) => {
         console.log(response.data);
         setAppointment(response.data);
+
+        axios
+          .get(
+            `http://localhost:5000/doctors//get-diagnostics/by-app/${state.appointment.id}`
+          )
+          .then((resp) => {
+            console.log(resp.data[0].Diagnostics[0]);
+            setDiagnostic(resp.data[0].Diagnostics[0]);
+
+            axios
+              .get(
+                `http://localhost:5000/doctors//get-prescriptions/by-app/${state.appointment.id}`
+              )
+              .then((result) => {
+                console.log(result.data);
+                setPrescriptionObject(result.data);
+              });
+          });
       });
   }, []);
 
@@ -43,29 +68,88 @@ function AppointmentPage() {
         setAppointment({ ...appointment, status: "Complete" });
       });
   };
+
+  const addDiagnostic = () => {
+    axios
+      .post(
+        `http://localhost:5000/doctors/add-diagnostic`,
+        {
+          observation: newDiagnostic,
+          appId: state.appointment.id,
+          doctorId: state.appointment.DoctorId,
+        },
+        {
+          headers: { accessToken: sessionStorage.getItem("accessToken") },
+        }
+      )
+      .then((response) => {
+        if (response.data.error) {
+          alert("Unauthorized");
+        } else {
+          const diagnosticToAdd = response.data;
+          console.log(response.data);
+          setDiagnostic(diagnosticToAdd);
+        }
+      });
+  };
+
+  const addPrescription = () => {
+    axios
+      .post(
+        `http://localhost:5000/doctors/add-prescription`,
+        {
+          observation: "Eat healthy",
+          appId: state.appointment.id,
+          doctorId: state.appointment.DoctorId,
+        },
+        {
+          headers: { accessToken: sessionStorage.getItem("accessToken") },
+        }
+      )
+      .then((response) => {
+        if (response.data.error) {
+          alert("Unauthorized");
+        } else {
+          const prescriptionToAdd = response.data;
+          setPrescriptionObject(prescriptionToAdd);
+        }
+      });
+  };
+
+  const handleChange = (e) => {
+    setNewPrescription(e.target.value);
+  };
+
+  const handleChangeDiag = (diag) => {
+    console.log(diag);
+    setNewDiagnostic(diag);
+  };
+
   return (
     <div class="row">
       <DoctorSidebar />
       <div class="col-md-10">
         <>
           {/* VIEW FOR PACIENT AND DOCTOR */}
-          <div className="info-appointment">
+          <div className="info-appointment m-3">
             <div className="card">
-              <h5 className="card-header">{appointment.title}</h5>
-              <div className="card-body">
+              <h5
+                className="card-header"
+                style={{ background: "#65C18C", color: "#fff" }}
+              >
+                {appointment.title.toUpperCase()}
+              </h5>
+              <div className="card-body" style={{ textAlign: "left" }}>
                 <p className="card-text">
-                  <strong>Patient Name: </strong>
+                  <span style={{ fontWeight: "600" }}>Patient Name: </span>
                   {appointment.Patient.name}
                 </p>
                 <p className="card-text">
-                  <strong>Date: </strong>
+                  <span style={{ fontWeight: "600" }}>Date: </span>{" "}
                   {appointment.date}
                 </p>
                 <p className="card-text">
-                  <strong>Status: </strong>
-                  {/* <span class="badge rounded-pill bg-warning text-dark">
-                    {appointment.status}
-                  </span> */}
+                  <span style={{ fontWeight: "600" }}>Status: </span>{" "}
                   <Status status={appointment.status} />
                 </p>
               </div>
@@ -88,7 +172,7 @@ function AppointmentPage() {
                     type="button"
                     className="btn btn-outline-success btn-space"
                     data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
+                    data-bs-target="#exampleModal2"
                   >
                     Add prescription
                   </button>
@@ -118,21 +202,84 @@ function AppointmentPage() {
           </div>
 
           {/* VIEW OF DIAGNOSTIC */}
-          <div className="prescription mt-5">
-            <div className="card">
-              <h5 className="card-header">DIAGNOSTIC</h5>
-              <div className="card-body">jhkgfhjkl</div>
+          <div className="row">
+            <div className="col">
+              <div className="prescription">
+                <div className="card">
+                  <h5 className="card-header">DIAGNOSTIC</h5>
+                  <div className="card-body" style={{ textAlign: "left" }}>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Cardiology: </span>
+                      {diagnostic.cardiology}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Ophthalmology: </span>
+                      {diagnostic.ophthalmology}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Neurology: </span>
+                      {diagnostic.neurology}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Dermatology: </span>
+                      {diagnostic.dermatology}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Urology: </span>
+                      {diagnostic.urology}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Oncology: </span>
+                      {diagnostic.oncology}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Hepatology: </span>
+                      {diagnostic.hepatology}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Dentistry: </span>
+                      {diagnostic.dentistry}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Pneumology: </span>
+                      {diagnostic.pneumology}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-
-          {/* VIEW OF PRESCRIPTIONS */}
-          <div className="prescription mt-5">
-            <div className="card">
-              <h5 className="card-header">PRESCRIPTIONS</h5>
-              <div className="card-body">jhkgfhjkl</div>
+            <div className="col">
+              {/* VIEW OF PRESCRIPTIONS */}
+              <div className="prescription">
+                <div className="card">
+                  <h5 className="card-header">PRESCRIPTIONS</h5>
+                  <div className="card-body" style={{ textAlign: "left" }}>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Observations: </span>
+                      {prescriptionObject.observation}{" "}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Medication: </span>
+                      {prescriptionObject.AppointmentId}{" "}
+                    </p>
+                    <p className="card-text">
+                      <span style={{ fontWeight: "600" }}>Dose: </span>
+                      {prescriptionObject.AppointmentId}{" "}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </>
+        <PrescriptionForm
+          onChange={handleChange}
+          onAddPrescriptionClick={addPrescription}
+        />
+        <DiagnosticForm
+          onChangeDiagnostic={handleChangeDiag}
+          onAddDiagnosticClick={addDiagnostic}
+        />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import axios from "axios";
 import AppointmentCard from "./AppointmentCard";
 import { useNavigate } from "react-router-dom";
 import GeneralInfo from "./GeneralAppInfo";
+import Jumbotron from "./Jumbotron";
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
@@ -49,17 +50,8 @@ function Appointments() {
         <DoctorSidebar />
         <div class="col">
           <div>
+            <Jumbotron />
             <div class="row">
-              <div class="jumbotron jumbotron-billboard">
-                <div class="img"></div>
-                <div class="container">
-                  <div class="row m-4">
-                    <div class="col-lg-12">
-                      <h2>My Appointments</h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <GeneralInfo
                 style="linear-gradient(45deg, #ffb64d, #ffcb80)"
                 status="Pending"

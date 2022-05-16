@@ -6,7 +6,7 @@ import AppointmentCard from "./AppointmentCard";
 import { useNavigate } from "react-router-dom";
 
 function PendingAppointments(props) {
-  const status = props.status;
+  // const status = props.status;
   const [appointments, setAppointments] = useState([]);
   const { authState } = useContext(AuthContext);
   const navigate = useNavigate();
