@@ -14,7 +14,7 @@ function Status(props) {
         </span>
       )}
       {props.status === "Complete" && (
-        <span class="badge rounded-pill bg-primary text-dark">
+        <span class="badge rounded-pill bg-primary text-light">
           {props.status}
         </span>
       )}

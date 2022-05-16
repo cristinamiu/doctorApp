@@ -125,7 +125,7 @@ function RoutesMap() {
 
           <Route
             exact
-            path="/doctors/my-appointments/approved"
+            path="/doctors/my-appointments/complete"
             element={
               authState.role === "doctor" ? (
                 <DPendingAppointment status={"Complete"} />

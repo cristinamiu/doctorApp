@@ -123,6 +123,20 @@ router.put("/:doctorId/:appId/approve", async (req, res) => {
   }
 });
 
+router.put("/:doctorId/:appId/complete", async (req, res) => {
+  try {
+    const updatedApp = await Appointments.update(
+      { status: "Complete", isComplete: true },
+      { where: { id: req.params.appId } }
+    );
+
+    return res.json("Success");
+  } catch (err) {
+    console.error("There's an error" + err.message);
+    return res.status(404).json({ error: "Doctor not found" });
+  }
+});
+
 router.post("/new", async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
