@@ -12,6 +12,9 @@ import DoctorPatients from "./doctor/Patients";
 import DoctorAppointments from "./doctor/Appointments";
 import DoctorAppointmentPage from "./doctor/AppointmentPage";
 import DPendingAppointment from "./doctor/PendingAppointments";
+import PatientDashboard from "./patient/Dashboard";
+import PatientAppointments from "./patient/Appointments";
+
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
   return (
@@ -143,6 +146,48 @@ function RoutesMap() {
                 <DoctorAppointmentPage />
               ) : (
                 <h1>Unauthorized</h1>
+              )
+            }
+          />
+          {/* PATIENT ROUTES */}
+          <Route
+            exact
+            path="/patients/dashboard"
+            element={
+              authState.role === "patient" ? (
+                <div>
+                  <PatientDashboard />
+                </div>
+              ) : (
+                <h1> {authState.role}</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/patients/my-appointments"
+            element={
+              authState.role === "patient" ? (
+                <div>
+                  <PatientDashboard />
+                </div>
+              ) : (
+                <h1> Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/patients/medical-records"
+            element={
+              authState.role === "patient" ? (
+                <div>
+                  <PatientAppointments />
+                </div>
+              ) : (
+                <h1> Unauthorized</h1>
               )
             }
           />

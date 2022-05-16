@@ -53,6 +53,20 @@ function App() {
                     secondId: resp.data.id,
                   });
                 });
+            } else if (response.data.role === "patient") {
+              axios
+                .get(
+                  `http://localhost:5000/doctors/get-patient/${response.data.id}`
+                )
+                .then((resp) => {
+                  setAuthState({
+                    email: response.data.email,
+                    id: response.data.id,
+                    role: response.data.role,
+                    status: true,
+                    secondId: resp.data.id,
+                  });
+                });
             }
           }
         }

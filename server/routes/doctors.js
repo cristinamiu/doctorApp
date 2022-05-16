@@ -11,6 +11,21 @@ const {
 const validateRegisterInput = require("../validation/doctorsValidation");
 const bcrypt = require("bcrypt");
 
+// PATIENT REQUESTS
+
+router.get("/get-patient/:userId", async (req, res) => {
+  const doctor = await Patients.findOne({
+    where: { UserId: req.params.userId },
+    attributes: ["id"],
+  });
+  if (!doctor) {
+    return res.status(404).json({ error: "Doctor not found" });
+  }
+
+  res.json(doctor);
+});
+// DOCTOR REQUESTS
+
 router.get("/get-doc/:userId", async (req, res) => {
   const doctor = await Doctors.findOne({
     where: { UserId: req.params.userId },
