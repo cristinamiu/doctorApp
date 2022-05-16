@@ -32,9 +32,6 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Appointments.associate = (models) => {
-    Appointments.hasMany(models.Prescriptions, {
-      onDelete: "cascade",
-    });
     Appointments.belongsTo(models.Patients);
     Appointments.belongsTo(models.Doctors);
   };

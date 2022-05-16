@@ -1,6 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { Users, Doctors, Patients, Appointments } = require("../models");
+const {
+  Users,
+  Doctors,
+  Patients,
+  Appointments,
+  Diagnostics,
+} = require("../models");
 const validateRegisterInput = require("../validation/doctorsValidation");
 const bcrypt = require("bcrypt");
 
@@ -49,6 +55,25 @@ router.get("/my-appointments/appointment/:appId", async (req, res) => {
   });
 
   return res.json(myAppointments);
+});
+
+router.post("/add-diagnostic", async (req, res) => {
+  const { field, content, doctorId, appId } = req.body;
+
+  try {
+    Diagnostics.create({
+      [field]: content,
+    }).then((result) => {
+      Appointments.update(
+        { DiagnosticId: result.id },
+        { where: { id: appId } }
+      ).then((result) => {
+        return res.json(result);
+      });
+    });
+  } catch (error) {
+    return res.status(404).json({ error: "Could not add diagnostic" + error });
+  }
 });
 
 router.delete("/:doctorId/:appId/delete-appointment", async (req, res) => {

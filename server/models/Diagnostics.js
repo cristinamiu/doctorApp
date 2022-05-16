@@ -52,6 +52,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "Not diagnosed",
     },
   });
-
+  Diagnostics.associate = (models) => {
+    Diagnostics.belongsToMany(models.Prescriptions, {
+      through: "Appointments",
+      onDelete: "cascade",
+    });
+  };
   return Diagnostics;
 };
