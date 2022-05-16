@@ -5,7 +5,7 @@ function AppointmentCard(props) {
   return (
     <div className="col-sm-3">
       <div className="m-2 card appointment-card">
-        <img src="../images/doctor.png" alt="Appointment" />
+        <img src="../../images/doctor.png" alt="Appointment" />
         <div className="m-3 card-title">
           <h5>{props.appointment.title}</h5>
         </div>

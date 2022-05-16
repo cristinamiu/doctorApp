@@ -11,7 +11,7 @@ import Dashboard from "./doctor/Dashboard";
 import DoctorPatients from "./doctor/Patients";
 import DoctorAppointments from "./doctor/Appointments";
 import DoctorAppointmentPage from "./doctor/AppointmentPage";
-
+import DPendingAppointment from "./doctor/PendingAppointments";
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
   return (
@@ -94,6 +94,41 @@ function RoutesMap() {
             element={
               authState.role === "doctor" ? (
                 <DoctorAppointments />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/doctors/my-appointments/pending"
+            element={
+              authState.role === "doctor" ? (
+                <DPendingAppointment status={"Pending"} />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+          <Route
+            exact
+            path="/doctors/my-appointments/approved"
+            element={
+              authState.role === "doctor" ? (
+                <DPendingAppointment status={"Approved"} />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
+            path="/doctors/my-appointments/approved"
+            element={
+              authState.role === "doctor" ? (
+                <DPendingAppointment status={"Complete"} />
               ) : (
                 <h1>Unauthorized</h1>
               )
