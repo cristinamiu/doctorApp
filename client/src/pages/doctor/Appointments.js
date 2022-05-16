@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import AppointmentCard from "./AppointmentCard";
 import { useNavigate } from "react-router-dom";
+import GeneralInfo from "./GeneralAppInfo";
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
@@ -41,54 +42,41 @@ function Appointments() {
         console.log(response.data);
       });
   }, [doctorId]);
+
   return (
     <div className="container-fluid d-flex flex-column p-0">
       <div class="row">
         <DoctorSidebar />
         <div class="col">
-          <h3 style={{ textAlign: "left", marginTop: "10px" }}>
-            Pending appointments:
-          </h3>
-          {!appointments.find((app) => app.status === "Pending") ? (
-            <p style={{ fontStyle: "italic", textAlign: "left" }}>
-              No pending appointments
-            </p>
-          ) : (
-            <div className="row p-2">
-              {appointments.map(
-                (app, key) =>
-                  app.status === "Pending" && (
-                    <AppointmentCard
-                      appointment={app}
-                      onDelete={handleDelete}
-                      onShow={handleShow}
-                    />
-                  )
-              )}
+          <div>
+            <div class="row">
+              <div class="jumbotron jumbotron-billboard">
+                <div class="img"></div>
+                <div class="container">
+                  <div class="row m-4">
+                    <div class="col-lg-12">
+                      <h2>My Appointments</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <GeneralInfo
+                style="linear-gradient(45deg, #ffb64d, #ffcb80)"
+                status="Pending"
+                path="/doctors/my-appointments/pending"
+              />
+              <GeneralInfo
+                style="linear-gradient(45deg, #2ed8b6, #59e0c5)"
+                status="Upcoming"
+                path="/doctors/my-appointments/approved"
+              />
+              <GeneralInfo
+                style="linear-gradient(45deg, #4099ff, #73b4ff)"
+                status="Past"
+                path="/doctors/my-appointments/complete"
+              />
             </div>
-          )}
-
-          <h3 style={{ textAlign: "left", marginTop: "10px" }}>
-            Upcoming appointments:
-          </h3>
-          {!appointments.find((app) => app.status === "Approved") ? (
-            <p style={{ fontStyle: "italic", textAlign: "left" }}>
-              No upcoming appointments
-            </p>
-          ) : (
-            <div className="row p-2">
-              {appointments.map(
-                (app, key) =>
-                  app.status === "Approved" && (
-                    <AppointmentCard
-                      appointment={app}
-                      onDelete={handleDelete}
-                      onShow={handleShow}
-                    />
-                  )
-              )}
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
