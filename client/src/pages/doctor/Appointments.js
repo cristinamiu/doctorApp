@@ -49,33 +49,46 @@ function Appointments() {
           <h3 style={{ textAlign: "left", marginTop: "10px" }}>
             Pending appointments:
           </h3>
-          <div className="row p-2">
-            {appointments.map(
-              (app, key) =>
-                app.status === "Pending" && (
-                  <AppointmentCard
-                    appointment={app}
-                    onDelete={handleDelete}
-                    onShow={handleShow}
-                  />
-                )
-            )}
-          </div>
+          {!appointments.find((app) => app.status === "Pending") ? (
+            <p style={{ fontStyle: "italic", textAlign: "left" }}>
+              No pending appointments
+            </p>
+          ) : (
+            <div className="row p-2">
+              {appointments.map(
+                (app, key) =>
+                  app.status === "Pending" && (
+                    <AppointmentCard
+                      appointment={app}
+                      onDelete={handleDelete}
+                      onShow={handleShow}
+                    />
+                  )
+              )}
+            </div>
+          )}
+
           <h3 style={{ textAlign: "left", marginTop: "10px" }}>
             Upcoming appointments:
           </h3>
-          <div className="row p-2">
-            {appointments.map(
-              (app, key) =>
-                app.status === "Approved" && (
-                  <AppointmentCard
-                    appointment={app}
-                    onDelete={handleDelete}
-                    onShow={handleShow}
-                  />
-                )
-            )}
-          </div>
+          {!appointments.find((app) => app.status === "Approved") ? (
+            <p style={{ fontStyle: "italic", textAlign: "left" }}>
+              No upcoming appointments
+            </p>
+          ) : (
+            <div className="row p-2">
+              {appointments.map(
+                (app, key) =>
+                  app.status === "Approved" && (
+                    <AppointmentCard
+                      appointment={app}
+                      onDelete={handleDelete}
+                      onShow={handleShow}
+                    />
+                  )
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
