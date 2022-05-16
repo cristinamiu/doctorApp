@@ -1,10 +1,10 @@
 import React from "react";
 
-function Jumbotron() {
+function Jumbotron(props) {
   return (
     <div class="jumbotron jumbotron-cover-image">
       <div class="container">
-        <h1 style={{ textAlign: "center" }}>My Appointments</h1>
+        <h1 style={{ textAlign: "center" }}>{props.title}</h1>
       </div>
     </div>
   );

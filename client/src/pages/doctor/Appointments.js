@@ -50,7 +50,7 @@ function Appointments() {
         <DoctorSidebar />
         <div class="col">
           <div>
-            <Jumbotron />
+            <Jumbotron title="My Appointments" />
             <div class="row">
               <GeneralInfo
                 style="linear-gradient(45deg, #ffb64d, #ffcb80)"
