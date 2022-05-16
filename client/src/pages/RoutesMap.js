@@ -16,6 +16,8 @@ import PatientDashboard from "./patient/Dashboard";
 import PatientAppointments from "./patient/Appointments";
 import PPendingAppointment from "./patient/PendingAppointments";
 import PatientAppointmentPage from "./patient/AppointmentPage";
+import MedicalRecords from "./patient/MedicalRecords";
+import Record from "./patient/Record";
 
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
@@ -233,7 +235,20 @@ function RoutesMap() {
             element={
               authState.role === "patient" ? (
                 <div>
-                  <PatientAppointments />
+                  <MedicalRecords patientId={authState.secondId} />
+                </div>
+              ) : (
+                <h1> Unauthorized</h1>
+              )
+            }
+          />
+          <Route
+            exact
+            path="/patients/medical-records/:recordId"
+            element={
+              authState.role === "patient" ? (
+                <div>
+                  <Record />
                 </div>
               ) : (
                 <h1> Unauthorized</h1>

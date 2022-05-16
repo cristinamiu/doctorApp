@@ -73,11 +73,13 @@ function AppointmentPage() {
   };
 
   const addDiagnostic = () => {
+    console.log("state");
+    console.log(state);
     axios
       .post(
         `http://localhost:5000/doctors/add-diagnostic`,
         {
-          observation: newDiagnostic,
+          content: newDiagnostic,
           appId: state.appointment.id,
           doctorId: state.appointment.DoctorId,
         },
@@ -90,6 +92,7 @@ function AppointmentPage() {
           alert("Unauthorized");
         } else {
           const diagnosticToAdd = response.data;
+          console.log("Adding diagnostic");
           console.log(response.data);
           setDiagnostic(diagnosticToAdd);
         }

@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import PatientSidebar from "./Sidebar";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
-import AppointmentCard from "../doctor/AppointmentCard";
 import { useNavigate } from "react-router-dom";
 import GeneralInfo from "../doctor/GeneralAppInfo";
 import Jumbotron from "../doctor/Jumbotron";
