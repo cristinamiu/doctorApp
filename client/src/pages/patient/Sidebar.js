@@ -1,6 +1,15 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
+  // const { authState, setAuthState } = useContext(AuthContext);
+  // const navigate = useNavigate();
+  // const logout = () => {
+  //   localStorage.removeItem("accessToken");
+  //   setAuthState({ username: "", id: 0, status: false });
+  //   console.log("logged out");
+  //   navigate("/login");
+  // };
   return (
     <div class="col-sm-auto bg-light d-flex flex-column p-0">
       <div class="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
@@ -57,14 +66,7 @@ const Sidebar = () => {
             aria-labelledby="dropdownUser3"
           >
             <li>
-              <a class="dropdown-item" href="/doctors/logout">
-                Log out
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="/doctors/profile">
-                Profile
-              </a>
+              <a class="dropdown-item">Log out</a>
             </li>
           </ul>
         </div>

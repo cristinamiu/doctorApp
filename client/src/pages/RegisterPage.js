@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function RegisterPage() {
   const [name, setName] = useState("");
@@ -8,6 +9,7 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = React.useState({});
+  const { authState, setAuthState } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -24,7 +26,26 @@ function RegisterPage() {
       .then(() => {
         console.log("Success");
         setErrors({});
-        navigate("/patients/dashboard");
+        axios
+          .post("http://localhost:5000/auth/login", {
+            email: email,
+            password: password,
+          })
+          .then((response) => {
+            setErrors({});
+            setAuthState({
+              email: response.data.email,
+              id: response.data.id,
+              role: response.data.role,
+              status: true,
+            });
+            localStorage.setItem("accessToken", response.data.accessToken);
+            console.log(response.data);
+            navigate("/patients/dashboard");
+          })
+          .catch((err) => {
+            setErrors(err.response.data);
+          });
       })
       .catch((err) => {
         setErrors(err.response.data);
