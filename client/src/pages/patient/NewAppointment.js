@@ -38,7 +38,7 @@ function NewAppointment(props) {
       })
       .then((response) => {
         console.log(response.data);
-        navigate(`/patients/my-appointments`);
+        navigate(`/patients/dashboard`);
       });
   };
 
