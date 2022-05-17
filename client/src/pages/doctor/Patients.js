@@ -7,8 +7,6 @@ import { AuthContext } from "../../context/AuthContext";
 function Patients() {
   const { authState } = useContext(AuthContext);
   const [patients, setPatients] = useState([]);
-  const [fName, setfName] = useState("");
-  const [lName, setlName] = useState("");
   const doctorId = authState.secondId;
 
   useEffect(() => {

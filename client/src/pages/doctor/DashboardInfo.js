@@ -1,12 +1,12 @@
 import React from "react";
 
-function GeneralAppInfo(props) {
+function DashboardInfo(props) {
   return (
-    <div class="col-md- col-xl-3 m-5">
+    <div class="col-md-6 mt-5">
       <div class="card  order-card" style={{ background: props.style }}>
         <div class="card-block">
           <h4 class="m-b-40">
-            {props.status} <br /> Appointments
+            {props.status} <br />
           </h4>
           <h2 class="text-right">
             <i class="fa fa-cart-plus f-left"></i>
@@ -14,7 +14,7 @@ function GeneralAppInfo(props) {
           </h2>
 
           <a href={props.path} class="btn btn btn-outline-light">
-            Go to appointments
+            {props.buttonText}
           </a>
         </div>
       </div>
@@ -22,4 +22,4 @@ function GeneralAppInfo(props) {
   );
 }
 
-export default GeneralAppInfo;
+export default DashboardInfo;
