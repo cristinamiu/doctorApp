@@ -63,7 +63,7 @@ function Doctors() {
 
   return (
     <div>
-      <div class="container-fluid">
+      <div class="container-fluid d-flex flex-column p-0">
         <div class="row">
           <AdminSidebar />
           <div class="col-sm p-4 vh-100">

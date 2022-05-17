@@ -1,6 +1,15 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
+  const { authState, setAuthState } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({ username: "", id: 0, status: false });
+    console.log("logged out");
+    navigate("/login");
+  };
   return (
     <div class="col-sm-auto bg-light sticky-top">
       <div class="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
@@ -42,7 +51,7 @@ const Sidebar = () => {
             </a>
           </li>
         </ul>
-        {/* <div class="dropdown ">
+        <div class="dropdown ">
           <a
             href="/"
             class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle"
@@ -57,17 +66,12 @@ const Sidebar = () => {
             aria-labelledby="dropdownUser3"
           >
             <li>
-              <a class="dropdown-item" href="/">
-                Settings
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="/">
-                Profile
-              </a>
+              <button class="dropdown-item" onClick={logout}>
+                Logout
+              </button>
             </li>
           </ul>
-        </div> */}
+        </div>
       </div>
     </div>
   );
