@@ -27,7 +27,7 @@ function Record() {
             setPrescriptionObject(result.data);
           });
       });
-  }, []);
+  }, [recordId]);
 
   return (
     <div class="row">

@@ -104,4 +104,17 @@ router.get("/users", async (req, res) => {
   return res.json(users);
 });
 
+router.get("/users2", async (req, res) => {
+  const users = await Users.findAll({
+    where: { role: "doctor" },
+    include: {
+      model: Doctors,
+      attributes: ["userId", "department", "id"],
+      required: true,
+    },
+  });
+
+  return res.json(users);
+});
+
 module.exports = router;

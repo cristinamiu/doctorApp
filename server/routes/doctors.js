@@ -254,6 +254,14 @@ router.put("/:doctorId/:appId/complete", async (req, res) => {
   }
 });
 
+router.get("/all-docs/:service", (req, res) => {
+  Doctors.findAll({ where: { department: req.params.service } }).then(
+    (response) => {
+      return res.json(response);
+    }
+  );
+});
+
 router.post("/new", async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 

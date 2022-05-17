@@ -14,7 +14,7 @@ function AppointmentCard(props) {
             <strong>Date: </strong> {props.appointment.date}
           </p>
           <p>
-            <strong>Doctor: </strong> {props.appointment.Doctor.id}
+            <strong>Doctor: </strong> {props.appointment.Doctor.name}
           </p>
           <p>
             <strong>Service: </strong> {props.appointment.Doctor.department}
