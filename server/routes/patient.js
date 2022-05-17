@@ -20,6 +20,14 @@ router.get("/:patientId/my-appointments", async (req, res) => {
   return res.json(myAppointments);
 });
 
+router.get("/:patientId/my-appointments/pending", async (req, res) => {
+  const myAppointments = await Appointments.findAll({
+    where: { PatientId: req.params.patientId },
+  });
+
+  return res.json(myAppointments);
+});
+
 router.get("/my-appointments/appointment/:appId", async (req, res) => {
   const myAppointments = await Appointments.findOne({
     where: { id: req.params.appId },

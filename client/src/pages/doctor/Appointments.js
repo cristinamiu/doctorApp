@@ -13,6 +13,10 @@ function Appointments() {
   const navigate = useNavigate();
   const doctorId = authState.secondId;
 
+  const [pending, setPending] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
+  const [past, setPast] = useState([]);
+
   const handleShow = (app) => {
     console.log(app);
     navigate(`/doctors/my-appointments/appointment/${app.id}`, {
@@ -41,6 +45,19 @@ function Appointments() {
       .then((response) => {
         setAppointments(response.data);
         console.log(response.data);
+        const pendingApp = response.data.filter(
+          (app) => app.status === "Pending"
+        ).length;
+        const upcomingApp = response.data.filter(
+          (app) => app.status === "Approved"
+        ).length;
+        const pastApp = response.data.filter(
+          (app) => app.status === "Complete"
+        ).length;
+
+        setPending(pendingApp);
+        setUpcoming(upcomingApp);
+        setPast(pastApp);
       });
   }, [doctorId]);
 
@@ -56,16 +73,19 @@ function Appointments() {
                 style="linear-gradient(45deg, #ffb64d, #ffcb80)"
                 status="Pending"
                 path="/doctors/my-appointments/pending"
+                number={pending}
               />
               <GeneralInfo
                 style="linear-gradient(45deg, #2ed8b6, #59e0c5)"
                 status="Upcoming"
                 path="/doctors/my-appointments/approved"
+                number={upcoming}
               />
               <GeneralInfo
                 style="linear-gradient(45deg, #4099ff, #73b4ff)"
                 status="Past"
                 path="/doctors/my-appointments/complete"
+                number={past}
               />
             </div>
           </div>

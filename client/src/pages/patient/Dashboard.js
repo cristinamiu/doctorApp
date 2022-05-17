@@ -27,56 +27,8 @@ function PatientDashboard(props) {
 
         <div class="col">
           <div>
-            <Jumbotron title="Medical Records" />
+            <Jumbotron title="Dashboard" />
           </div>
-
-          <table class="table align-middle mb-0 bg-white mt-5">
-            <thead class="bg-light">
-              <tr>
-                <th>#</th>
-                <th>Id</th>
-                <th>Appointment</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {medicalRecords.map((record) => (
-                <tr>
-                  <td>
-                    <img
-                      src="/images/doctor.png"
-                      className="rouded-circle justify-content-start"
-                      alt=""
-                    />
-                  </td>
-                  <td>{record.id}</td>
-                  <td>
-                    <div class=" align-items-center">
-                      <div>
-                        <p class="fw-bold mb-1">{record.title}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{record.date}</td>
-                  <td>{record.status}</td>
-
-                  <td>
-                    <div class="btn-group m-2">
-                      <a
-                        type="button"
-                        class="btn btn-primary btn-sm"
-                        href={`/patients/medical-records/${record.id}`}
-                      >
-                        View
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
