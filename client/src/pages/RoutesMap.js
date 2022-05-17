@@ -272,7 +272,7 @@ function RoutesMap() {
           />
           <Route
             exact
-            path="/patients/medical-records/:recordId"
+            path="/patients/medical-records/:recordId/:patientName"
             element={<Record />}
           />
         </Routes>

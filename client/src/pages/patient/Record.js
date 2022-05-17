@@ -5,8 +5,8 @@ import { useParams } from "react-router";
 import Jumbotron from "../doctor/Jumbotron";
 
 function Record() {
-  const { recordId } = useParams();
-  console.log(recordId);
+  const { recordId, patientName } = useParams();
+  console.log(patientName);
 
   const [diagnostic, setDiagnostic] = useState({});
   const [prescriptionObject, setPrescriptionObject] = useState({});

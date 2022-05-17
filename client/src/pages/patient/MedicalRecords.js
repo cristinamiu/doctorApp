@@ -6,6 +6,7 @@ import axios from "axios";
 
 function MedicalRecords(props) {
   const [medicalRecords, setMedicalRecords] = useState([]);
+  const [patientInfo, setPatientInfo] = useState([]);
   const { patientId } = useParams();
   const navigate = useNavigate();
 
@@ -18,6 +19,12 @@ function MedicalRecords(props) {
         console.log(response.data);
         setMedicalRecords(response.data);
         response.data.map((data) => console.log(data.id));
+        axios
+          .get(`http://localhost:5000/patients/all-patients/${patientId}`)
+          .then((response) => {
+            console.log(response.data);
+            setPatientInfo(response.data);
+          });
       });
   }, []);
   return (
@@ -27,7 +34,7 @@ function MedicalRecords(props) {
 
         <div class="col">
           <div>
-            <Jumbotron title="Medical Records" />
+            <Jumbotron title="Medical Records" subtitle={patientInfo.name} />
           </div>
 
           <table class="table align-middle mb-0 bg-white mt-5">
@@ -67,7 +74,7 @@ function MedicalRecords(props) {
                       <a
                         type="button"
                         class="btn btn-primary btn-sm"
-                        href={`/patients/medical-records/${record.id}`}
+                        href={`/patients/medical-records/${record.id}/${patientInfo.name}`}
                       >
                         View
                       </a>

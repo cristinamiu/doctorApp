@@ -37,4 +37,10 @@ router.get("/my-appointments/appointment/:appId", async (req, res) => {
   return res.json(myAppointments);
 });
 
+router.get("/all-patients/:patientId", (req, res) => {
+  Patients.findOne({ where: { id: req.params.patientId } }).then((patients) => {
+    return res.json(patients);
+  });
+});
+
 module.exports = router;
