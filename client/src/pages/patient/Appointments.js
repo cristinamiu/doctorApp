@@ -67,6 +67,11 @@ function Appointments() {
                 path="/patients/my-appointments/complete"
               />
             </div>
+
+            <a href="/patients/new-appointment" class="btn btn-success">
+              {" "}
+              New Appointment
+            </a>
           </div>
         </div>
       </div>
