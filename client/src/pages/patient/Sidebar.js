@@ -2,14 +2,18 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
-  // const { authState, setAuthState } = useContext(AuthContext);
-  // const navigate = useNavigate();
-  // const logout = () => {
-  //   localStorage.removeItem("accessToken");
-  //   setAuthState({ username: "", id: 0, status: false });
-  //   console.log("logged out");
-  //   navigate("/login");
-  // };
+  const { authState, setAuthState } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const goToRecords = () => {
+    navigate(`/patients/medical-records-main/${authState.secondId}`);
+  };
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({ username: "", id: 0, status: false });
+    console.log("logged out");
+    navigate("/login");
+  };
   return (
     <div class="col-sm-auto bg-light d-flex flex-column p-0">
       <div class="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
@@ -39,16 +43,17 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            <a
-              href="/patients/medical-records"
+            <button
+              // href=`/patients/medical-records/${authState.secondId}`
               class="nav-link py-3 px-2"
               title=""
               data-bs-toggle="tooltip"
               data-bs-placement="right"
               data-bs-original-title="Customers"
+              onClick={goToRecords}
             >
               <i class="bi-people fs-2"></i>
-            </a>
+            </button>
           </li>
         </ul>
         <div class="dropdown ">
@@ -66,7 +71,9 @@ const Sidebar = () => {
             aria-labelledby="dropdownUser3"
           >
             <li>
-              <a class="dropdown-item">Log out</a>
+              <a class="dropdown-item" onClick={logout}>
+                Log out
+              </a>
             </li>
           </ul>
         </div>

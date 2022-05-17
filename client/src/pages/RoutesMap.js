@@ -98,6 +98,19 @@ function RoutesMap() {
 
           <Route
             exact
+            path="/doctors/my-patients/:patientId"
+            element={
+              authState.role === "doctor" ? (
+                // <DoctorPatients />
+                <MedicalRecords />
+              ) : (
+                <h1>Unauthorized</h1>
+              )
+            }
+          />
+
+          <Route
+            exact
             path="/doctors/my-appointments"
             element={
               authState.role === "doctor" ? (
@@ -232,7 +245,7 @@ function RoutesMap() {
 
           <Route
             exact
-            path="/patients/medical-records"
+            path="/patients/medical-records-main/:patientId"
             element={
               authState.role === "patient" ? (
                 <div>
@@ -260,15 +273,7 @@ function RoutesMap() {
           <Route
             exact
             path="/patients/medical-records/:recordId"
-            element={
-              authState.role === "patient" ? (
-                <div>
-                  <Record />
-                </div>
-              ) : (
-                <h1> Unauthorized</h1>
-              )
-            }
+            element={<Record />}
           />
         </Routes>
       </BrowserRouter>

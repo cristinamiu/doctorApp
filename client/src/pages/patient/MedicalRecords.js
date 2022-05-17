@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PatientSidebar from "./Sidebar";
 import Jumbotron from "../doctor/Jumbotron";
 import axios from "axios";
 
 function MedicalRecords(props) {
   const [medicalRecords, setMedicalRecords] = useState([]);
-  const patientId = props.patientId;
+  const { patientId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
