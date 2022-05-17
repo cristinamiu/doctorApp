@@ -67,14 +67,9 @@ const Sidebar = () => {
             aria-labelledby="dropdownUser3"
           >
             <li>
-              <a class="dropdown-item" href="/doctors/logout">
-                Log out
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" onClick={logout}>
-                Profile
-              </a>
+              <button class="dropdown-item" onClick={logout}>
+                Logout
+              </button>
             </li>
           </ul>
         </div>
