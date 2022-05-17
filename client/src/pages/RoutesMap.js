@@ -22,6 +22,9 @@ import NewAppointment from "./patient/NewAppointment";
 import DMedicalRecords from "./doctor/MedicalRecors";
 import DRecord from "./doctor/Record";
 import Home from "./Home";
+import About from "./About";
+import Services from "./Services";
+import Team from "./Team";
 
 function RoutesMap() {
   const { authState } = useContext(AuthContext);
@@ -34,6 +37,9 @@ function RoutesMap() {
 
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/services" element={<Services />} />
+          <Route exact path="/team" element={<Team />} />
 
           {/* Register route */}
           <Route exact path="/register" element={<RegisterPage />} />
